@@ -1,0 +1,33 @@
+{
+    "name": "keukenmagazijn/laravel-google-authentication",
+    "description": "This package provides an easy-to-use Facade for Google userinfo - which is configurable - using the official Google OAUTH package.",
+    "keywords": ["laravel", "keukenmagazijn", "google", "identity", "authentication"],
+    "license": "MIT",
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Remy Kooistra",
+            "email": "remykooistra77@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Keukenmagazijn\\LaravelGoogleAuthentication\\": "src"
+        },
+        "files": []
+    },
+    "extra" : {
+        "laravel" : {
+            "providers" : [
+                "Keukenmagazijn\\LaravelGoogleAuthentication\\Providers\\GoogleIdentityServiceProvider"
+            ],
+            "aliases": {
+                "GoogleIdentity": "Keukenmagazijn\\LaravelGoogleAuthentication\\Facades\\GoogleIdentityFacade"
+            }
+        }
+    }
+}
