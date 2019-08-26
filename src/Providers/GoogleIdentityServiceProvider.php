@@ -15,7 +15,7 @@ class GoogleIdentityServiceProvider extends ServiceProvider
     {
         $configPath = __DIR__ . '/../config/google_identity.php';
         $this->mergeConfigFrom($configPath, 'google_identity');
-        $this->app->alias(GoogleIdentityFacade::class, 'googleidentity');
+//        $this->app->alias(GoogleIdentityFacade::class, 'googleidentity');
     }
 
     /**
@@ -26,6 +26,6 @@ class GoogleIdentityServiceProvider extends ServiceProvider
     public function boot()
     {
         $configPath = __DIR__ . '/../config/google_identity.php';
-        $this->publishes([$configPath => config_path('google_identity.php')], 'google-identity');
+        $this->publishes([$configPath => config_path('google_identity.php')], 'km');
     }
 }
