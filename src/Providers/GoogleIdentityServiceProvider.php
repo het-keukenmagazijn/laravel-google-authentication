@@ -27,7 +27,7 @@ class GoogleIdentityServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $configPath = __DIR__ . '/config/google_identity.php';
+        $configPath = __DIR__ . '/../config/google_identity.php';
         $this->publishes([$configPath => config_path('google_identity.php')], 'config');
     }
 }
