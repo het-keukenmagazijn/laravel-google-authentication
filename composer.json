@@ -4,7 +4,7 @@
     "keywords": ["laravel", "keukenmagazijn", "google", "identity", "authentication"],
     "license": "MIT",
     "prefer-stable": true,
-    "version": "1.0.0",
+    "version": "1.0.1",
     "minimum-stability": "dev",
     "authors": [
         {
