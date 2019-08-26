@@ -14,7 +14,6 @@ class GoogleIdentityServiceProvider extends ServiceProvider
     {
         $configPath = __DIR__ . '/../config/google_identity.php';
         $this->mergeConfigFrom($configPath, 'google_identity');
-        $this->loadMigrationsFrom(__DIR__.'/../migrations');
     }
 
     /**
@@ -26,5 +25,6 @@ class GoogleIdentityServiceProvider extends ServiceProvider
     {
         $configPath = __DIR__ . '/../config/google_identity.php';
         $this->publishes([$configPath => config_path('google_identity.php')], 'km');
+        $this->loadMigrationsFrom(__DIR__.'/../migrations');
     }
 }
