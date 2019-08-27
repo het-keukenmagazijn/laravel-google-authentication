@@ -76,6 +76,79 @@ Users authorizing using Google will automatically gain the 'employee' role.
 
 The following models/entities should be available in your application.
 
+##### User.php (this is my example)
+```php
+<?php
+
+namespace App\Entities;
+
+use Hash;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Keukenmagazijn\LaravelGoogleAuthentication\Traits\UsesGoogleIdentity;
+
+class User extends Authenticatable
+{
+    use Notifiable;
+    use SoftDeletes;
+    use CanResetPassword;
+    use UsesGoogleIdentity;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'email', 'password', 'user_type_id', 'avatar', 'google_account_id'
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function hasRole(string $key): bool {
+        return $this->roles()->where('_key', $key)->exists();
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function roles(): BelongsToMany {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * @return Role
+     */
+    public function getHighestRole():? Role {
+        return $this->roles()->orderBy('powerlevel', 'desc')->first();
+    }
+}
+```
+
 ##### GoogleOauthToken.php
 ```php
 <?php
