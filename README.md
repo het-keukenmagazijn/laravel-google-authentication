@@ -1,5 +1,5 @@
 ## Introduction
-This package allows users to quickly authenticate using their Google account. You are able to specify a domain the user' account must be in - or you can just allow anyone to register.
+This package allows users to quickly authenticate using their Google account with Google Identity. You are able to specify a domain the user' account must be in - or you can just allow anyone to register.
 
 The package extends and works together with the default Laravel authentication, but it requires modification and additions to the default tables provided by Laravel.
 
@@ -174,4 +174,25 @@ class UserTypeTranslation extends Model
         $this->hasOne(UserType::class);
     }
 }
+```
+
+#### Google Identity
+You need to set-up a route for your Google Identity to call back to, this is done in Google Identity itself.
+Once you have those configuration settings, you should now fill add the following data to your `.env` file and fill it with the corresponding data:
+```
+GOOGLE_IDENTITY_APP_NAME=
+GOOGLE_IDENTITY_CLIENT_ID=
+GOOGLE_IDENTITY_CLIENT_SECRET=
+GOOGLE_IDENTITY_REDIRECT_URI=
+```
+
+#### Routing
+The next step is to set-up a get route for the `GOOGLE_IDENTITY_REDIRECT_URI` uri.
+There is a controller available within the package to handle the callback for you and it will redirect you back to the named route defined as `callback_redirect_route_name` in the `config/google_identity.php` file.
+
+If you want to customize the callback method you can set-up a custom controller for it and use the `GoogleIdentityController` as an example on how to use the `GoogleIdentityFacade`.
+
+An example route where `GOOGLE_IDENTITY_REDIRECT_URI='http://appurl.extension/identity/callback'`:
+```php
+Route::get('identity/callback', [\Keukenmagazijn\LaravelGoogleAuthentication\Controllers\GoogleIdentityController::class, 'callback']);
 ```
