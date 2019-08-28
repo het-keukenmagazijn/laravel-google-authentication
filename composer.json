@@ -4,7 +4,7 @@
     "keywords": ["laravel", "keukenmagazijn", "google", "identity", "authentication"],
     "license": "MIT",
     "prefer-stable": true,
-    "version": "1.0.2",
+    "version": "1.0.3",
     "authors": [
         {
             "name": "Remy Kooistra",
