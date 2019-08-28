@@ -20,14 +20,21 @@ trait UsesGoogleIdentity
      */
     public function firstOrCreateGoogleUser(array $googleResponseData): self
     {
-        $_userTypeId = $this->_getOrCreateUserTypeByKey('google')->id;
         try {
-            return $this->where('email', $googleResponseData['email'])
-                ->where('user_type_id', $_userTypeId)
+            $_user = $this->where('email', $googleResponseData['email'])
                 ->firstOrFail();
+
+            $_updateArray = [];
+            if (empty($_user->name) || (!empty($googleResponseData['name']) && $_user->name != $googleResponseData['name'])) $_updateArray['name'] = $googleResponseData['name'];
+            if (empty($_user->google_account_id)) $_updateArray['google_account_id'] = $googleResponseData['id'];
+            if ($_user->avatar != $googleResponseData['picture']) $_updateArray['avatar'] = $googleResponseData['picture'];
+            if (!empty($_updateArray)) {
+                $_updateArray['updated_at'] = date('Y-m-d H:i:s');
+                $_user->update($_updateArray);
+            }
+            return $_user;
         } catch (\Exception $e) {
             $_user = $this->create([
-                'user_type_id' => $_userTypeId,
                 'email' => $googleResponseData['email'],
                 'avatar' => $googleResponseData['picture'],
                 'name' => $googleResponseData['name'],
@@ -97,26 +104,6 @@ trait UsesGoogleIdentity
                 'active' => 1,
                 'icon' => 'fa fa-user',
                 'powerlevel' => 1
-            ]);
-        }
-    }
-
-    /**
-     * @param string $key
-     * @return Model
-     */
-    private function _getOrCreateUserTypeByKey(string $key): Model
-    {
-        $_model = \App::make(config('google_identity.users.providers.userTypes.model'));
-        try {
-            return $_model->where('_key', $key)->firstOrFail();
-        } catch (\Exception $e) {
-            return $_model->create([
-                '_key' => 'google',
-                \App::getLocale() => [
-                    'name' => 'Google Identity User',
-                    'description' => 'A Google Identity User is a user that uses Google to login under the organization name itself.'
-                ]
             ]);
         }
     }
