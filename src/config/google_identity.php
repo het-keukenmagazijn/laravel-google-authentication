@@ -19,9 +19,6 @@
                 'model' => 'App\\Entities\\Role',
                 'relationalName' => 'roles'
             ],
-            'userTypes' => [
-                'model' => 'App\\Entities\\UserType'
-            ],
             'googleOauthToken' => [
                 'model' => 'App\\Entities\\GoogleOauthToken'
             ]
