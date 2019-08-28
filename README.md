@@ -23,20 +23,14 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_type_id', false, true)->index();
             $table->string('google_account_id')->unique()->nullable();
             $table->string('name')->nullable();
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('avatar')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->unique(['user_type_id', 'email']);
-            $table->foreign('user_type_id')
-                ->references('id')->on('user_types')
-                    ->onDelete('restrict');
         });
     }
 
@@ -54,7 +48,7 @@ class CreateUsersTable extends Migration
 
 If you have already ran the default `php artisan make:auth` command you will need to change your columns to uphold the same columns and their types mentioned above.
 
-The package provides the rest of the required migrations, such as user_roles, roles, user_types and a google_oauth_tokens_table.
+The package provides the rest of the required migrations, such as user_roles, roles and a google_oauth_tokens_table.
 
 Once you have configured the migration you will have to publish the configuration file by running `php artisan vendor:publish --tag=km`. Be sure to edit the package properly to your environment.
 
@@ -104,7 +98,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'user_type_id', 'avatar', 'google_account_id'
+        'name', 'email', 'password', 'avatar', 'google_account_id'
     ];
 
     /**
@@ -200,51 +194,6 @@ class Role
     public function getIcon(): string {
         if (empty($this->icon)) return 'fa fa-question-circle-o';
         return $this->icon;
-    }
-}
-```
-
-##### UserType.php
-```php
-<?php
-
-namespace App\Entities;
-
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
-class UserType extends Model implements TranslatableContract
-{
-    use Translatable;
-
-    protected $fillable = [
-        '_key'
-    ];
-
-    public $translatedAttributes = [
-        'name', 'description'
-    ];
-}
-```
-
-##### UserTypeTranslation.php
-```php
-<?php
-
-namespace App\Entities;
-
-use Illuminate\Database\Eloquent\Model;
-
-class UserTypeTranslation extends Model
-{
-    protected $fillable = [
-        'name', 'description'
-    ];
-
-    public function userType() {
-        $this->hasOne(UserType::class);
     }
 }
 ```
