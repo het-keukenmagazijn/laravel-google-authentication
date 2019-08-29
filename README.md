@@ -55,6 +55,13 @@ You have the option to create either tables or to create views if your database 
 In the latter case you need to configure the configured alias name and the database name itself that you want to source the data from in the 
 `config/google_identity.php` file and you will need to change the `migrations.create_views_instead_of_tables` value from false to `true`.
 
+Or add the following config keys to your `.env` file and configure it with your config values:
+```
+GOOGLE_IDENTITY_USE_VIEWS=
+GOOGLE_IDENTITIY_VIEW_CONNECTION_ALIAS=
+GOOGLE_IDENTITIY_VIEW_DATABASE_NAME=
+```
+
 ## Configuration
 Once you have configured the migration you will have to publish the configuration file by running `php artisan vendor:publish --tag=km`. Be sure to edit the package properly to your environment.
 

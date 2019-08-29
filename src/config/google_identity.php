@@ -11,9 +11,9 @@
         ]
     ],
     'migrations' => [
-        'create_views_instead_of_tables' => false,
-        'view_source_connection_alias' => '',
-        'view_source_database_name' => ''
+        'create_views_instead_of_tables' => env('GOOGLE_IDENTITY_USE_VIEWS',false),
+        'view_source_connection_alias' => env('GOOGLE_IDENTITIY_VIEW_CONNECTION_ALIAS', ''),
+        'view_source_database_name' => env('GOOGLE_IDENTITIY_VIEW_DATABASE_NAME', '')
     ],
     'users' => [
         'providers' => [
