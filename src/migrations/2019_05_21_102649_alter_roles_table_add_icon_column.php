@@ -14,8 +14,12 @@ class AlterRolesTableAddIconColumn extends Migration
     public function up()
     {
         Schema::table('roles', function (Blueprint $table) {
-            $table->string('icon', 20);
-            $table->integer('powerlevel', false, true)->unique()->index();
+            if (!Schema::hasColumn('roles', 'icon')) {
+                $table->string('icon', 20);
+            }
+            if (!Schema::hasColumn('roles', 'powerlevel')) {
+                $table->integer('powerlevel', false, true)->unique()->index()->autoIncrement();
+            }
         });
     }
 
