@@ -99,10 +99,10 @@ trait UsesGoogleIdentity
             return $_model->where('_key', 'employee')->firstOrFail();
         } catch (\Exception $e) {
             return $_model->create([
-                '_key' => 'employee',
-                'name' => 'An employee',
+                '_key' => config('google_identity.users.providers.roles.default_role_name'),
+                'name' => 'Default Google user role',
                 'active' => 1,
-                'icon' => 'fa fa-user',
+                'icon' => 'fab fa-google',
                 'powerlevel' => 1
             ]);
         }

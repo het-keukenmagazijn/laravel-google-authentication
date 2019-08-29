@@ -17,7 +17,8 @@
             ],
             'roles' => [
                 'model' => 'App\\Entities\\Role',
-                'relationalName' => 'roles'
+                'relationalName' => 'roles',
+                'default_role_name' => 'employee'
             ],
             'googleOauthToken' => [
                 'model' => 'App\\Entities\\GoogleOauthToken'
