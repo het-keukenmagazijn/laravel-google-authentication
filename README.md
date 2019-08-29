@@ -46,12 +46,20 @@ class CreateUsersTable extends Migration
 }
 ```
 
+## Migrations
 If you have already ran the default `php artisan make:auth` command you will need to change your columns to uphold the same columns and their types mentioned above.
 
 The package provides the rest of the required migrations, such as user_roles, roles and a google_oauth_tokens_table.
 
+You have the option to create either tables or to create views if your database architecture requires you to do so.
+In the latter case you need to configure the configured alias name and the database name itself that you want to source the data from in the 
+`config/google_identity.php` file and you will need to change the `migrations.create_views_instead_of_tables` value from false to `true`.
+
+## Configuration
 Once you have configured the migration you will have to publish the configuration file by running `php artisan vendor:publish --tag=km`. Be sure to edit the package properly to your environment.
 
+
+## UsesGoogleIdentity trait
 Once your package is published you will have to add the `Keukenmagazijn\LaravelGoogleAuthentication` Trait to your User model, ie.:
 ```php
 class User extends Model {
@@ -59,6 +67,7 @@ class User extends Model {
 }
 ```
 
+## Button rendering and Identity
 You can render the authorization button by adding the following code to your blade:
 ```php
 {!! (new Keukenmagazijn\LaravelGoogleAuthentication\GoogleIdentityFacade())->renderAuthorizeButton() !!}
@@ -68,6 +77,7 @@ When a user authorizes it will check if the user account is within the whitelist
 
 Users authorizing using Google will automatically gain the 'employee' role.
 
+## Required entities
 The following models/entities should be available in your application.
 
 ##### User.php (this is my example)

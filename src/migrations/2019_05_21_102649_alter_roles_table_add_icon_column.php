@@ -13,14 +13,16 @@ class AlterRolesTableAddIconColumn extends Migration
      */
     public function up()
     {
-        Schema::table('roles', function (Blueprint $table) {
-            if (!Schema::hasColumn('roles', 'icon')) {
-                $table->string('icon', 20);
-            }
-            if (!Schema::hasColumn('roles', 'powerlevel')) {
-                $table->integer('powerlevel', false, true)->unique()->index()->autoIncrement();
-            }
-        });
+        if (!config('google_identity.migrations.create_views_instead_of_tables')) {
+            Schema::table('roles', function (Blueprint $table) {
+                if (!Schema::hasColumn('roles', 'icon')) {
+                    $table->string('icon', 20);
+                }
+                if (!Schema::hasColumn('roles', 'powerlevel')) {
+                    $table->integer('powerlevel', false, true)->unique()->index()->autoIncrement();
+                }
+            });
+        }
     }
 
     /**

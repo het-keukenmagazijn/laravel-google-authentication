@@ -10,6 +10,11 @@
             'authorizeButton' => '<a href="%s"><button class="button is-info is-fullwidth is-large"><span class="icon"><i class="fab fa-google is-large"></i></span><span> Sign in with Google</span></button></a>'
         ]
     ],
+    'migrations' => [
+        'create_views_instead_of_tables' => false,
+        'view_source_connection_alias' => '',
+        'view_source_database_name' => ''
+    ],
     'users' => [
         'providers' => [
             'users' => [
