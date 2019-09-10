@@ -19,7 +19,7 @@ class AlterRolesTableAddIconColumn extends Migration
                     $table->string('icon', 20);
                 }
                 if (!Schema::hasColumn('roles', 'powerlevel')) {
-                    $table->integer('powerlevel', false, true)->unique()->index()->autoIncrement();
+                    $table->integer('powerlevel', false, true)->unique()->index();
                 }
                 if (!Schema::hasColumn('roles', 'active')) {
                     $table->boolean('active')->default(1)->index();
