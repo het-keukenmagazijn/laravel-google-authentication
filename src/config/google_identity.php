@@ -23,7 +23,7 @@
             'roles' => [
                 'model' => 'App\\Entities\\Role',
                 'relationalName' => 'roles',
-                'default_role_name' => 'employee'
+                'default_role_name' => null // SET NULL TO DISABLE. else give it a name like 'google_user'.
             ],
             'googleOauthToken' => [
                 'model' => 'App\\Entities\\GoogleOauthToken'

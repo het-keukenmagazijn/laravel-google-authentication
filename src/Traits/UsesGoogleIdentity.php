@@ -40,7 +40,9 @@ trait UsesGoogleIdentity
                 'name' => $googleResponseData['name'],
                 'google_account_id' => $googleResponseData['id']
             ]);
-            $_user->{config('google_identity.users.providers.roles.relationalName')}()->attach($this->_getOrCreateEmployeeRole());
+            if (config('google_identity.users.providers.roles.default_role_name') !== null) {
+                $_user->{config('google_identity.users.providers.roles.relationalName')}()->attach($this->_getOrCreateEmployeeRole());
+            }
             return $_user;
         }
     }
